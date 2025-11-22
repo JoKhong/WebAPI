@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CitiesManager.WebAPI.DatabaseContext;
 using CitiesManager.Core.Domain.Models;
+using CitiesManager.Core.ServiceContracts;
+using CitiesManager.Core.DTO;
 
 namespace CitiesManager.WebAPI.Controllers
 {
@@ -16,23 +18,26 @@ namespace CitiesManager.WebAPI.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public CitiesController(ApplicationDbContext context)
+        private readonly ICityGettersServices _cityGettersServices;
+
+        public CitiesController(ApplicationDbContext context, ICityGettersServices cityGettersServices)
         {
+            _cityGettersServices = cityGettersServices;
             _context = context;
         }
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> GetCities()
+        public async Task<ActionResult<IEnumerable<CityResponse>>> GetCities()
         {
-            return await _context.Cities.ToListAsync();
+            return await _cityGettersServices.GetAllCities();
         }
 
         // GET: api/Cities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<City>> GetCity(Guid id)
+        public async Task<ActionResult<CityResponse>> GetCity(Guid id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            var city = await _cityGettersServices.GetCityByID(id);
 
             if (city == null)
             {

@@ -20,30 +20,23 @@ namespace CitiesManager.Infrastructure.Repositories
             _context = context;
         }
 
-        // GET: api/Cities
-       
         public async Task<List<City>> GetCities()
         {
             return await _context.Cities.ToListAsync();
         }
 
-        // GET: api/Cities/5
-       
         public async Task<City?> GetCity(Guid id)
         {
             var city = await _context.Cities.FindAsync(id);
 
             if (city == null)
             {
-                return city;
+                return null;
             }
 
             return city;
         }
 
-        // PUT: api/Cities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-      
         public async Task<bool> PutCity(Guid id, City city)
         {
             if (id != city.CityID)
@@ -72,9 +65,6 @@ namespace CitiesManager.Infrastructure.Repositories
             return false;
         }
 
-        // POST: api/Cities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-       
         public async Task<City> PostCity(City city)
         {
             _context.Cities.Add(city);
@@ -83,8 +73,6 @@ namespace CitiesManager.Infrastructure.Repositories
             return city;
         }
 
-        // DELETE: api/Cities/5
-       
         public async Task<bool> DeleteCity(Guid id)
         {
             var city = await _context.Cities.FindAsync(id);
