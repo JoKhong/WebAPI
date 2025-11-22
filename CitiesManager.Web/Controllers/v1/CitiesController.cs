@@ -9,12 +9,13 @@ using CitiesManager.WebAPI.DatabaseContext;
 using CitiesManager.Core.Domain.Models;
 using CitiesManager.Core.ServiceContracts;
 using CitiesManager.Core.DTO;
+using Asp.Versioning;
 
-namespace CitiesManager.WebAPI.Controllers
+namespace CitiesManager.WebAPI.Controllers.v1
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CitiesController : ControllerBase
+    [ApiVersion("1.0")]
+ 
+    public class CitiesController : CustomControllerBase
     {
         private readonly ICityGettersServices _cityGettersServices;
         private readonly ICityAdderService _cityAdderService;
@@ -39,6 +40,7 @@ namespace CitiesManager.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        //[Produces("application/xml")] Produce XML instead of JSON
         public async Task<ActionResult<IEnumerable<CityResponse>>> GetCities()
         {
             return await _cityGettersServices.GetAllCities();
