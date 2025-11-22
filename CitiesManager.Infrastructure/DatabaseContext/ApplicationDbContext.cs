@@ -1,9 +1,9 @@
-﻿using CitiesManager.Web.Models;
+﻿using CitiesManager.Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics.Metrics;
 
-namespace CitiesManager.Web.DatabaseContext
+namespace CitiesManager.WebAPI.DatabaseContext
 {
     public class ApplicationDbContext : DbContext
     {
@@ -29,30 +29,6 @@ namespace CitiesManager.Web.DatabaseContext
                     CityID = Guid.Parse("73CEA91A-61D4-46AA-A326-8A0DE3B0C0DC"), 
                     CityName = "Ipoh" 
                 });
-
-            //Seed DB Table
-            try
-            {
-                //string countiresJson = File.ReadAllText("countries.json");
-                //List<Country> countries = JsonSerializer.Deserialize<List<Country>>(countiresJson);
-
-                //foreach (Country country in countries)
-                //    modelBuilder.Entity<Country>().HasData(country);
-
-                //string personsJson = File.ReadAllText("persons.json");
-                //List<Person> persons = JsonSerializer.Deserialize<List<Person>>(countiresJson);
-
-                //foreach (Person peson in persons)
-                //    modelBuilder.Entity<Country>().HasData(peson);
-            }
-            catch (Exception ex) { }
-
-            //Fluent API
-            try
-            {
-               
-            }
-            catch (Exception ex) { }
 
         }
 

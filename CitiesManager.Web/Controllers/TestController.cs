@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CitiesManager.Web.Controllers
+namespace CitiesManager.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

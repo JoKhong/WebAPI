@@ -1,4 +1,4 @@
-using CitiesManager.Web.DatabaseContext;
+using CitiesManager.WebAPI.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
