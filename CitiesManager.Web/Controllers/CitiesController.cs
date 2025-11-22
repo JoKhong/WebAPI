@@ -34,6 +34,10 @@ namespace CitiesManager.WebAPI.Controllers
         }
 
         // GET: api/Cities
+        /// <summary>
+        /// Get list of all cities, (ID and Name) from "cities" table
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CityResponse>>> GetCities()
         {

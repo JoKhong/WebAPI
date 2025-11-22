@@ -18,6 +18,11 @@ builder.Services.AddDbContext<ApplicationDbContext>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         });
 
+
+//Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
 
 builder.Services.AddScoped<ICityGettersServices, CityGetterServices>();
@@ -32,6 +37,9 @@ var app = builder.Build();
 
 app.UseHsts();
 app.UseHttpsRedirection();
+
+app.UseSwagger(); //Create endpoint for swagger.json
+app.UseSwaggerUI(); //Create swagger UI for testing
 
 app.UseAuthorization();
 
