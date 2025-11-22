@@ -16,18 +16,21 @@ namespace CitiesManager.WebAPI.Controllers
     [ApiController]
     public class CitiesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
         private readonly ICityGettersServices _cityGettersServices;
         private readonly ICityAdderService _cityAdderService;
         private readonly ICityUpdateService _cityUpdateService;
+        private readonly ICityDeleterService _cityDeleterService;
 
-        public CitiesController(ApplicationDbContext context, ICityGettersServices cityGettersServices, ICityAdderService cityAdderService, ICityUpdateService cityUpdateService)
+        public CitiesController(
+            ICityGettersServices cityGettersServices, 
+            ICityAdderService cityAdderService, 
+            ICityUpdateService cityUpdateService, 
+            ICityDeleterService cityDeleterService)
         {   
-            _context = context;
             _cityAdderService = cityAdderService;
             _cityGettersServices = cityGettersServices;
             _cityUpdateService = cityUpdateService;
+            _cityDeleterService = cityDeleterService;
         }
 
         // GET: api/Cities
@@ -80,21 +83,10 @@ namespace CitiesManager.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCity(Guid id)
         {
-            var city = await _context.Cities.FindAsync(id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            _context.Cities.Remove(city);
-            await _context.SaveChangesAsync();
+            await _cityDeleterService.DeleteCity(id);
 
             return NoContent();
         }
 
-        private bool CityExists(Guid id)
-        {
-            return _context.Cities.Any(e => e.CityID == id);
-        }
     }
 }
