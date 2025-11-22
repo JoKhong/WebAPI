@@ -22,6 +22,7 @@ builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
 
 builder.Services.AddScoped<ICityGettersServices, CityGetterServices>();
 builder.Services.AddScoped<ICityAdderService, CityAdderService>();
+builder.Services.AddScoped<ICityUpdateService, CityUpdateService>();
 
 
 var app = builder.Build();

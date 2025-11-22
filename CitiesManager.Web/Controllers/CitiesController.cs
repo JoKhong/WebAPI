@@ -20,12 +20,14 @@ namespace CitiesManager.WebAPI.Controllers
 
         private readonly ICityGettersServices _cityGettersServices;
         private readonly ICityAdderService _cityAdderService;
+        private readonly ICityUpdateService _cityUpdateService;
 
-        public CitiesController(ApplicationDbContext context, ICityGettersServices cityGettersServices, ICityAdderService cityAdderService)
+        public CitiesController(ApplicationDbContext context, ICityGettersServices cityGettersServices, ICityAdderService cityAdderService, ICityUpdateService cityUpdateService)
         {   
             _context = context;
             _cityAdderService = cityAdderService;
             _cityGettersServices = cityGettersServices;
+            _cityUpdateService = cityUpdateService;
         }
 
         // GET: api/Cities
@@ -52,30 +54,14 @@ namespace CitiesManager.WebAPI.Controllers
         // PUT: api/Cities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCity(Guid id, City city)
+        public async Task<IActionResult> PutCity(Guid id, CityUpdateRequest updateRequest)
         {
-            if (id != city.CityID)
+            if (id != updateRequest.CityID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(city).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _cityUpdateService.UpdateCity(updateRequest);
 
             return NoContent();
         }

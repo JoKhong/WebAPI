@@ -12,7 +12,7 @@ namespace CitiesManager.Core.Domain.RepositoryContracts
     {
         Task<List<City>> GetCities();
         Task<City?> GetCity(Guid id);
-        Task<bool> PutCity(Guid id, City city);
+        Task<City?> PutCity(City city);
         Task<City> PostCity(City city);
         Task<bool> DeleteCity(Guid id);
         

@@ -37,14 +37,14 @@ namespace CitiesManager.Infrastructure.Repositories
             return city;
         }
 
-        public async Task<bool> PutCity(Guid id, City city)
+        public async Task<City> PutCity(City updateCity)
         {
-            if (id != city.CityID)
-            {
-                return false;
-            }
+            City? matchingCity = await _context.Cities.FirstOrDefaultAsync(temp => temp.CityID == updateCity.CityID);
 
-            _context.Entry(city).State = EntityState.Modified;
+            if (matchingCity == null)
+                return matchingCity;
+
+            matchingCity.CityName = updateCity.CityName;
 
             try
             {
@@ -52,9 +52,9 @@ namespace CitiesManager.Infrastructure.Repositories
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CityExists(id))
+                if (GetCity(updateCity.CityID) is null)
                 {
-                    return false;
+                    return null;
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace CitiesManager.Infrastructure.Repositories
                 }
             }
 
-            return false;
+            return matchingCity;
         }
 
         public async Task<City> PostCity(City city)
@@ -88,9 +88,5 @@ namespace CitiesManager.Infrastructure.Repositories
             return true;
         }
 
-        private bool CityExists(Guid id)
-        {
-            return _context.Cities.Any(e => e.CityID == id);
-        }
     }
 }
