@@ -27,7 +27,7 @@ namespace CitiesManager.Infrastructure.Repositories
 
         public async Task<City?> GetCity(Guid id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            var city = await _context.Cities.FirstOrDefaultAsync( temp => temp.CityID == id);
 
             if (city == null)
             {

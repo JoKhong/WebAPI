@@ -81,8 +81,15 @@ namespace CitiesManager.WebAPI.Controllers
 
         // DELETE: api/Cities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCity(Guid id)
+        public async Task<IActionResult> DeleteCity(Guid? id)
         {
+            if (id == null)
+                return Problem(
+                    detail: "Id is null",
+                    statusCode: 400,
+                    title:"City Delete"
+                    );
+
             await _cityDeleterService.DeleteCity(id);
 
             return NoContent();
