@@ -19,11 +19,13 @@ namespace CitiesManager.WebAPI.Controllers
         private readonly ApplicationDbContext _context;
 
         private readonly ICityGettersServices _cityGettersServices;
+        private readonly ICityAdderService _cityAdderService;
 
-        public CitiesController(ApplicationDbContext context, ICityGettersServices cityGettersServices)
-        {
-            _cityGettersServices = cityGettersServices;
+        public CitiesController(ApplicationDbContext context, ICityGettersServices cityGettersServices, ICityAdderService cityAdderService)
+        {   
             _context = context;
+            _cityAdderService = cityAdderService;
+            _cityGettersServices = cityGettersServices;
         }
 
         // GET: api/Cities
@@ -81,12 +83,11 @@ namespace CitiesManager.WebAPI.Controllers
         // POST: api/Cities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<City>> PostCity(City city)
+        public async Task<ActionResult<CityResponse>> PostCity(CityAddRequest addRequest)
         {
-            _context.Cities.Add(city);
-            await _context.SaveChangesAsync();
+            CityResponse addResponse = await _cityAdderService.AddCity(addRequest);
 
-            return CreatedAtAction("GetCity", new { id = city.CityID }, city);
+            return CreatedAtAction("GetCity", new { id = addResponse.CityID }, addResponse);
         }
 
         // DELETE: api/Cities/5

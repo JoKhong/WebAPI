@@ -21,6 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>
 builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
 
 builder.Services.AddScoped<ICityGettersServices, CityGetterServices>();
+builder.Services.AddScoped<ICityAdderService, CityAdderService>();
+
 
 var app = builder.Build();
 
